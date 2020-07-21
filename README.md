@@ -18,6 +18,9 @@
 This repo contains a CLI WebRTC Client that will connect and perform the load test. This is done via a REST API hosted on `:8080/doSignaling`. You can also watch the video/load test via the web UI at `:8080/`,
 it connects via the same REST API as the CLI.
 
+This project heavily borrows from [RTSPtoWebRTC](https://github.com/deepch/RTSPtoWebRTC). If you are looking for a full featured application to deploy that is probably a better choice. It is driven by a config file and
+has proper error handling.
+
 ### Running
 * `export GO111MODULE=on`
 * `git clone https://github.com/pion/rtsp-bench.git`

@@ -136,11 +136,15 @@ func rtspConsumer() {
 		codecs, err := session.Streams()
 		if err != nil {
 			panic(err)
-		} else if codecs[0].Type() != av.H264 {
-			panic("RTSP feed must be a single H264 codec")
+		}
+		for i, t := range codecs {
+			log.Println("Stream", i, "is of type", t.Type().String())
+		}
+		if codecs[0].Type() != av.H264 {
+			panic("RTSP feed must begin with a H264 codec")
 		}
 		if len(codecs) != 1 {
-			fmt.Println("Ignoring all but the first stream.")
+			log.Printf("Ignoring all but the first stream. %s\n", codecs[0].Type().String())
 		}
 
 		var previousTime time.Duration

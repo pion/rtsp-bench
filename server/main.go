@@ -144,7 +144,7 @@ func rtspConsumer() {
 			panic("RTSP feed must begin with a H264 codec")
 		}
 		if len(codecs) != 1 {
-			log.Printf("Ignoring all but the first stream. %s\n", codecs[0].Type().String())
+			log.Println("Ignoring all but the first stream.")
 		}
 
 		var previousTime time.Duration

@@ -23,14 +23,14 @@ var (
 	peerConnectionCount int64
 )
 
-// Generate CSV with two columns of peerConnectionCount and cpuUsage
+// Generate CSV with columns of timestamp, peerConnectionCount, and cpuUsage
 func reportBuilder() {
 	file, err := os.OpenFile("report.csv", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		panic(err)
 	}
 
-	if _, err := file.WriteString("peerConnectionCount, cpuUsage\n"); err != nil {
+	if _, err := file.WriteString("timestamp, peerConnectionCount, cpuUsage\n"); err != nil {
 		panic(err)
 	}
 
@@ -41,8 +41,7 @@ func reportBuilder() {
 		} else if len(usage) != 1 {
 			panic(fmt.Sprintf("CPU Usage results should have 1 sample, have %d", len(usage)))
 		}
-
-		if _, err = file.WriteString(fmt.Sprintf("%d, %f\n", atomic.LoadInt64(&peerConnectionCount), usage[0])); err != nil {
+		if _, err = file.WriteString(fmt.Sprintf("%s, %d, %f\n", time.Now().Format(time.RFC822Z), atomic.LoadInt64(&peerConnectionCount), usage[0])); err != nil {
 			panic(err)
 		}
 	}

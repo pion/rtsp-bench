@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	outboundVideoTrack  *webrtc.Track
+	outboundVideoTrack  *webrtc.TrackLocalStaticSample
 	peerConnectionCount int64
 )
 
@@ -104,7 +104,9 @@ func doSignaling(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	var err error
-	outboundVideoTrack, err = webrtc.NewTrack(webrtc.DefaultPayloadTypeH264, 5000, "pion-rtsp", "pion-rtsp", webrtc.NewRTPH264Codec(webrtc.DefaultPayloadTypeH264, 90000))
+	outboundVideoTrack, err = webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{
+		MimeType: "video/h264",
+	}, "pion-rtsp", "pion-rtsp")
 	if err != nil {
 		panic(err)
 	}
@@ -173,7 +175,7 @@ func rtspConsumer() {
 
 			bufferDuration := pkt.Time - previousTime
 			previousTime = pkt.Time
-			if err = outboundVideoTrack.WriteSample(media.Sample{Data: pkt.Data, Samples: media.NSamples(bufferDuration, 90000)}); err != nil && err != io.ErrClosedPipe {
+			if err = outboundVideoTrack.WriteSample(media.Sample{Data: pkt.Data, Duration: bufferDuration}); err != nil && err != io.ErrClosedPipe {
 				panic(err)
 			}
 		}

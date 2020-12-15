@@ -119,10 +119,11 @@ func main() {
 	panic(http.ListenAndServe(":8080", nil))
 }
 
-// Connect to a RTSP URL and pull media
-// Convert H264 to Annex-B, thesn write to `outboundVideoTrack` which sends to all PeerConnections
+// The RTSP URL that will be streamed
 const rtspURL = "rtsp://170.93.143.139:1935/rtplive/0b01b57900060075004d823633235daa"
 
+// Connect to an RTSP URL and pull media.
+// Convert H264 to Annex-B, then write to outboundVideoTrack which sends to all PeerConnections
 func rtspConsumer() {
 	annexbNALUStartCode := func() []byte { return []byte{0x00, 0x00, 0x00, 0x01} }
 

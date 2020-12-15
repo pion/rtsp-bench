@@ -112,7 +112,7 @@ func main() {
 	go rtspConsumer()
 	go reportBuilder()
 
-	http.Handle("/", http.FileServer(http.Dir(".")))
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/doSignaling", doSignaling)
 
 	fmt.Println("Open http://localhost:8080 to access this demo")

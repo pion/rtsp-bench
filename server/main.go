@@ -56,6 +56,18 @@ func doSignaling(w http.ResponseWriter, r *http.Request) {
 	}
 
 	peerConnection.OnICEConnectionStateChange(func(connectionState webrtc.ICEConnectionState) {
+		remoteDescription := peerConnection.CurrentRemoteDescription()
+		if remoteDescription != nil {
+			sessionDescription, _ := remoteDescription.Unmarshal()
+			if sessionDescription != nil {
+				log.Println("Client", connectionState, sessionDescription.Origin)
+			} else {
+				log.Println("Client", connectionState)
+			}
+		} else {
+			log.Println("Client", connectionState)
+		}
+
 		if connectionState == webrtc.ICEConnectionStateDisconnected {
 			count := atomic.AddInt64(&peerConnectionCount, -1)
 			log.Println(count, "client(s) connected")

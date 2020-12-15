@@ -57,12 +57,14 @@ func doSignaling(w http.ResponseWriter, r *http.Request) {
 
 	peerConnection.OnICEConnectionStateChange(func(connectionState webrtc.ICEConnectionState) {
 		if connectionState == webrtc.ICEConnectionStateDisconnected {
-			atomic.AddInt64(&peerConnectionCount, -1)
+			count := atomic.AddInt64(&peerConnectionCount, -1)
+			log.Println(count, "client(s) connected")
 			if err := peerConnection.Close(); err != nil {
 				panic(err)
 			}
 		} else if connectionState == webrtc.ICEConnectionStateConnected {
-			atomic.AddInt64(&peerConnectionCount, 1)
+			count := atomic.AddInt64(&peerConnectionCount, 1)
+			log.Println(count, "client(s) connected")
 		}
 	})
 

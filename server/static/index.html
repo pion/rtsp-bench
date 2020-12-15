@@ -16,6 +16,10 @@
     let pc = new RTCPeerConnection()
     pc.addTransceiver('video')
 
+    let log = msg => {
+        document.getElementById('logs').innerHTML += msg + '<br>'
+    }
+    pc.oniceconnectionstatechange = () => log(pc.iceConnectionState)
     pc.ontrack = function (event) {
         let el = document.createElement(event.track.kind)
         el.srcObject = event.streams[0]

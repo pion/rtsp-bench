@@ -8,6 +8,10 @@
 <div id="remoteVideos"></div>
 <br/>
 
+<div>
+    <button onclick="window.doSignaling(true)"> ICE Restart (reconnect)</button>
+</div>
+
 <h3> Logs </h3>
 <div id="logs"></div>
 </body>
@@ -29,21 +33,25 @@
         document.getElementById('remoteVideos').appendChild(el)
     }
 
-    pc.createOffer()
-        .then(offer => {
-            pc.setLocalDescription(offer)
+    window.doSignaling = iceRestart => {
+        pc.createOffer({iceRestart})
+            .then(offer => {
+                pc.setLocalDescription(offer)
 
-            return fetch(`/doSignaling`, {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(offer)
+                return fetch(`/doSignaling`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(offer)
+                })
             })
-        })
-        .then(res => res.json())
-        .then(res => pc.setRemoteDescription(res))
-        .catch(alert)
+            .then(res => res.json())
+            .then(res => pc.setRemoteDescription(res))
+            .catch(alert)
+    }
+
+    window.doSignaling(false)
 </script>
 </html>

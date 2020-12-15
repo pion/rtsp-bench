@@ -154,6 +154,12 @@ func rtspConsumer() {
 			if err != nil {
 				break
 			}
+
+			if pkt.Idx != 0 {
+				//audio or other stream, skip it
+				continue
+			}
+
 			pkt.Data = pkt.Data[4:]
 
 			// For every key-frame pre-pend the SPS and PPS

@@ -36,14 +36,14 @@ You can also use the provided WebRTC CLI
 In the server folder you will have a `reports.csv` that looks like
 
 ```
-peerConnectionCount, cpuUsage
-1, 17.878028
-0, 35.101254
-1, 12.565718
-1, 20.600500
-1, 17.878028
-0, 41.795438
-0, 37.083333
+timestamp, peerConnectionCount, cpuUsage
+2020-12-15T13:59:23-08:00, 1, 17.878028
+2020-12-15T13:59:26-08:00, 0, 35.101254
+2020-12-15T13:59:29-08:00, 1, 12.565718
+2020-12-15T13:59:32-08:00, 1, 20.600500
+2020-12-15T13:59:35-08:00, 1, 17.878028
+2020-12-15T13:59:38-08:00, 0, 41.795438
+2020-12-15T13:59:41-08:00, 0, 37.083333
 ```
 
 ### Results

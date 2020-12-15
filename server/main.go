@@ -41,7 +41,7 @@ func reportBuilder() {
 		} else if len(usage) != 1 {
 			panic(fmt.Sprintf("CPU Usage results should have 1 sample, have %d", len(usage)))
 		}
-		if _, err = file.WriteString(fmt.Sprintf("%s, %d, %f\n", time.Now().Format(time.RFC822Z), atomic.LoadInt64(&peerConnectionCount), usage[0])); err != nil {
+		if _, err = file.WriteString(fmt.Sprintf("%s, %d, %f\n", time.Now().Format(time.RFC3339), atomic.LoadInt64(&peerConnectionCount), usage[0])); err != nil {
 			panic(err)
 		}
 	}

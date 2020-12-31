@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	outboundVideoTrack  *webrtc.Track
+	outboundVideoTrack  *webrtc.TrackLocalStaticSample
 	peerConnectionCount int64
 )
 
@@ -104,7 +104,9 @@ func doSignaling(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	var err error
-	outboundVideoTrack, err = webrtc.NewTrack(webrtc.DefaultPayloadTypeH264, 5000, "pion-rtsp", "pion-rtsp", webrtc.NewRTPH264Codec(webrtc.DefaultPayloadTypeH264, 90000))
+	outboundVideoTrack, err = webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{
+		MimeType: "video/h264",
+	}, "pion-rtsp", "pion-rtsp")
 	if err != nil {
 		panic(err)
 	}
@@ -119,10 +121,11 @@ func main() {
 	panic(http.ListenAndServe(":8080", nil))
 }
 
-// Connect to a RTSP URL and pull media
-// Convert H264 to Annex-B, thesn write to `outboundVideoTrack` which sends to all PeerConnections
+// The RTSP URL that will be streamed
 const rtspURL = "rtsp://170.93.143.139:1935/rtplive/0b01b57900060075004d823633235daa"
 
+// Connect to an RTSP URL and pull media.
+// Convert H264 to Annex-B, then write to outboundVideoTrack which sends to all PeerConnections
 func rtspConsumer() {
 	annexbNALUStartCode := func() []byte { return []byte{0x00, 0x00, 0x00, 0x01} }
 
@@ -153,6 +156,12 @@ func rtspConsumer() {
 			if err != nil {
 				break
 			}
+
+			if pkt.Idx != 0 {
+				//audio or other stream, skip it
+				continue
+			}
+
 			pkt.Data = pkt.Data[4:]
 
 			// For every key-frame pre-pend the SPS and PPS
@@ -166,7 +175,7 @@ func rtspConsumer() {
 
 			bufferDuration := pkt.Time - previousTime
 			previousTime = pkt.Time
-			if err = outboundVideoTrack.WriteSample(media.Sample{Data: pkt.Data, Samples: media.NSamples(bufferDuration, 90000)}); err != nil && err != io.ErrClosedPipe {
+			if err = outboundVideoTrack.WriteSample(media.Sample{Data: pkt.Data, Duration: bufferDuration}); err != nil && err != io.ErrClosedPipe {
 				panic(err)
 			}
 		}

@@ -2,8 +2,8 @@ github.com/cheekybits/genny v1.0.0/go.mod h1:+tQajlRqAUrPI7DOSpB0XAqZYtQakVtB7wX
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/deepch/vdk v0.0.0-20211004143409-06d985e42f69 h1:rqKmCpa4YiEFNGw00rA4HAkdoUPZUevDCLvYoxKFm4o=
-github.com/deepch/vdk v0.0.0-20211004143409-06d985e42f69/go.mod h1:dKZrL0za+J6r0HgXZSH6tqXfeJJt0RaDmAGJJXz1RBQ=
+github.com/deepch/vdk v0.0.0-20211113104208-022deeb641f7 h1:kI1Ht8GRgmuCDFdAh1vP9um4BpMtx+OTrcGzRzyY0IQ=
+github.com/deepch/vdk v0.0.0-20211113104208-022deeb641f7/go.mod h1:dKZrL0za+J6r0HgXZSH6tqXfeJJt0RaDmAGJJXz1RBQ=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
 github.com/go-ole/go-ole v1.2.6 h1:/Fpf6oFPoeFik9ty7siob0G6Ke8QvQEuVcuChpwXzpY=

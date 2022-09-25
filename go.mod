@@ -1,6 +1,6 @@
 module github.com/pion/rtsp-bench
 
-go 1.12
+go 1.19
 
 require (
 	github.com/deepch/vdk v0.0.0-20211113104208-022deeb641f7
